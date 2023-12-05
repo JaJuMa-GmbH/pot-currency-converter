@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <power_toys>
+            <currency_converter>
+                <is_enable>1</is_enable>
+                <api_key>5e86382257d907527ecf4f9c</api_key>
+            </currency_converter>
+        </power_toys>
+    </default>
+</config>

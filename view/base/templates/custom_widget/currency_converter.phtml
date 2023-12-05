@@ -1,0 +1,126 @@
+<?php
+
+/** @var QuickAction $block * */
+
+use Jajuma\PowerToys\Block\PowerToys\QuickAction;
+use Jajuma\PowerToys\Helper\Data;
+
+/** @var Data $powerToysHelper * */
+$powerToysHelper = $this->helper(Data::class);
+$apiKey = $powerToysHelper->getScopeConfig('power_toys/currency_converter/api_key');
+?>
+<div class="powertoys-currency-convert-wrapper">
+    <div class="powertoys-currency-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v17.25m0 0c-1.472 0-2.882.265-4.185.75M12 20.25c1.472 0 2.882.265 4.185.75M18.75 4.97A48.416 48.416 0 0012 4.5c-2.291 0-4.545.16-6.75.47m13.5 0c1.01.143 2.01.317 3 .52m-3-.52l2.62 10.726c.122.499-.106 1.028-.589 1.202a5.988 5.988 0 01-2.031.352 5.988 5.988 0 01-2.031-.352c-.483-.174-.711-.703-.59-1.202L18.75 4.971zm-16.5.52c.99-.203 1.99-.377 3-.52m0 0l2.62 10.726c.122.499-.106 1.028-.589 1.202a5.989 5.989 0 01-2.031.352 5.989 5.989 0 01-2.031-.352c-.483-.174-.711-.703-.59-1.202L5.25 4.971z" />
+        </svg>
+    </div>
+    <div class="powertoys-currency-first-row">
+        <input type="number" id="amount_first" value="0">
+        <select id="first-currency-select"></select>
+    </div>
+    <div class="powertoys-currency-second-row">
+        <input type="number" id="amount_second" value="0">
+        <select id="second-currency-select"></select>
+    </div>
+</div>
+<style>
+    .powertoys-currency-convert-wrapper {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .powertoys-currency-icon {
+        display: flex;
+    }
+
+    .powertoys-currency-icon svg {
+        width: 40px;
+        margin: auto;
+    }
+
+    .powertoys-currency-convert-wrapper input,
+    .powertoys-currency-convert-wrapper select {
+        border: none !important;
+    }
+
+    .powertoys-currency-convert-wrapper .powertoys-currency-first-row,
+    .powertoys-currency-convert-wrapper .powertoys-currency-second-row {
+        display: flex;
+        align-items: center;
+        border: 1px solid #fff;
+        border-radius: 4px;
+        padding: 2px 0;
+    }
+
+    .jajumaLightMode ~ .powerToysModalWrapper .powertoys-currency-convert-wrapper .powertoys-currency-first-row,
+    .jajumaLightMode ~ .powerToysModalWrapper .powertoys-currency-convert-wrapper .powertoys-currency-second-row {
+        border-color: var(--jajuma-develop-black-module);
+    }
+</style>
+<script>
+    let currencies = ["AED", "AFN", "ALL", "AMD", "ANG", "AOA", "ARS", "AUD", "AWG", "AZN", "BAM", "BBD", "BDT", "BGN", "BHD", "BIF", "BMD", "BND", "BOB", "BRL", "BSD", "BTC", "BTN", "BWP", "BYN", "BZD", "CAD", "CDF", "CHF", "CLF", "CLP", "CNY", "COP", "CRC", "CUC", "CUP", "CVE", "CZK", "DJF", "DKK", "DOP", "DZD", "EGP", "ERN", "ETB", "EUR", "FJD", "FKP", "GBP", "GEL", "GGP", "GHS", "GIP", "GMD", "GNF", "GTQ", "GYD", "HKD", "HNL", "HRK", "HTG", "HUF", "IDR", "ILS", "IMP", "INR", "IQD", "IRR", "ISK", "JEP", "JMD", "JOD", "JPY", "KES", "KGS", "KHR", "KMF", "KPW", "KRW", "KWD", "KYD", "KZT", "LAK", "LBP", "LKR", "LRD", "LSL", "LYD", "MAD", "MDL", "MGA", "MKD", "MMK", "MNT", "MOP", "MRO", "MRU", "MUR", "MVR", "MWK", "MXN", "MYR", "MZN", "NAD", "NGN", "NIO", "NOK", "NPR", "NZD", "OMR", "PAB", "PEN", "PGK", "PHP", "PKR", "PLN", "PYG", "QAR", "RON", "RSD", "RUB", "RWF", "SAR", "SBD", "SCR", "SDG", "SEK", "SGD", "SHP", "SLL", "SOS", "SRD", "SSP", "STD", "STN", "SVC", "SYP", "SZL", "THB", "TJS", "TMT", "TND", "TOP", "TRY", "TTD", "TWD", "TZS", "UAH", "UGX", "USD", "UYU", "UZS", "VEF", "VES", "VND", "VUV", "WST", "XAF", "XAG", "XAU", "XCD", "XDR", "XOF", "XPD", "XPF", "XPT", "YER", "ZAR", "ZMW", "ZWL"];
+    let apiCurrency = 'https://v6.exchangerate-api.com/v6/' + '<?= $apiKey ?>' + '/latest/USD';
+    const firstDropDownCurrency = document.getElementById("first-currency-select");
+    const secondDropDownCurrency = document.getElementById("second-currency-select");
+
+    //Create dropdown from the currencies array
+    currencies.forEach((currency) => {
+        const option = document.createElement("option");
+        option.value = currency;
+        option.text = currency;
+        firstDropDownCurrency.add(option);
+    });
+
+    //Repeat same thing for the other dropdown
+    currencies.forEach((currency) => {
+        const option = document.createElement("option");
+        option.value = currency;
+        option.text = currency;
+        secondDropDownCurrency.add(option);
+    });
+
+    //Setting default values
+    firstDropDownCurrency.value = "USD";
+    secondDropDownCurrency.value = "EUR";
+
+    let convertCurrency = (e) => {
+        //Create References
+        let amount = document.querySelector("#amount_first").value;
+        let resultPosition = amount_second;
+        let fromCurrency = firstDropDownCurrency.value;
+        let toCurrency = secondDropDownCurrency.value;
+        console.log(this);
+
+        if (e.currentTarget.getAttribute('id') === "amount_second") {
+            amount = document.querySelector("#amount_second").value;
+            resultPosition = amount_first;
+            fromCurrency = secondDropDownCurrency.value;
+            toCurrency = firstDropDownCurrency.value;
+        }
+
+        //If amount input field is not empty
+        if (amount.length !== 0) {
+            fetch(apiCurrency)
+                .then((resp) => resp.json())
+                .then((data) => {
+                    let fromExchangeRate = data.conversion_rates[fromCurrency];
+                    let toExchangeRate = data.conversion_rates[toCurrency];
+                    const convertedAmount = (amount / fromExchangeRate) * toExchangeRate;
+                    resultPosition.value = `${convertedAmount.toFixed(
+                        2
+                    )}`;
+                });
+        } else {
+            resultPosition.value = "";
+        }
+    };
+
+    //Convert currency on input number & by clicking & after load of webpage & changing value of select/dropdown
+    window.addEventListener("load", convertCurrency);
+    document.querySelector("#amount_first").addEventListener("input", convertCurrency);
+    document.querySelector("#amount_second").addEventListener("input", convertCurrency);
+    document.querySelector("#first-currency-select").addEventListener("change", convertCurrency);
+    document.querySelector("#second-currency-select").addEventListener("change", convertCurrency);
+</script>

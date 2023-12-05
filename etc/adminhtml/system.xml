@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @author    JaJuMa GmbH <info@jajuma.de>
+ * @copyright Copyright (c) 2023-present JaJuMa GmbH <https://www.jajuma.de>. All rights reserved.
+ * @license   http://opensource.org/licenses/mit-license.php MIT License
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="power_toys">
+            <group id="currency_converter" translate="label" type="text" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Currency Converter</label>
+                <field id="is_enable" translate="label" sortOrder="10" type="select" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enable</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="api_key" translate="label comment" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1" type="text">
+                    <label>API Key</label>
+                    <comment>
+                        <![CDATA[
+                        <p>The app uses the Open Exchange Rates API to get the latest currency exchange rates.
+                        You'll need to sign up for a free API key on the
+                        <a href="https://openexchangerates.org/signup" rel="nofollow" target="_blank">Open Exchange Rates</a>
+                        website to use the app.</p>
+                        ]]>
+                    </comment>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

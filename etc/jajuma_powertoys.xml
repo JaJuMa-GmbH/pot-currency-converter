@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * @author    JaJuMa GmbH <info@jajuma.de>
+ * @copyright Copyright (c) 2023 JaJuMa GmbH <https://www.jajuma.de>. All rights reserved.
+ * @license   http://opensource.org/licenses/mit-license.php MIT License
+ */
+-->
+
+<powertoys xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="urn:magento:module:Jajuma_PowerToys:etc/jajuma_powertoys.xsd">
+    <quickaction id="currency_converter" class="Jajuma\PotCurrencyConverter\Block\PowerToys\QuickAction\CurrencyConverter">
+        <label translate="true">Currency Converter</label>
+        <arguments>
+            <!--        Enable (default: false): Turn on/off the widget -->
+            <argument name="enable">true</argument>
+            <!--        Action type: Popup/button-->
+            <argument name="action_type">popup</argument>
+            <!--        Icon -->
+            <argument name="widget_icon">Jajuma_PowerToys::svg/heroicons/outline/currency-dollar.svg</argument>
+            <argument name="template">Jajuma_PotCurrencyConverter::custom_widget/currency_converter.phtml</argument>
+            <!--        Lazyload (default: false): Lazyload component, template will only render when click open popup -->
+            <argument name="lazyload">true</argument>
+            <!--        Cache Lifetime (default: 0 mean nocache): Time to cache, shouldn't use when add Magewire component -->
+            <argument name="cache_lifetime">0</argument>
+            <!--        Sort order (default: 0 mean first position) -->
+            <argument name="sort_order">999</argument>
+            <!--        Add acl resource here-->
+            <argument name="acl_resource"></argument>
+        </arguments>
+    </quickaction>
+</powertoys>
