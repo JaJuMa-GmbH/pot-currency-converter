@@ -8,6 +8,7 @@ use Jajuma\PowerToys\Helper\Data;
 /** @var Data $powerToysHelper * */
 $powerToysHelper = $this->helper(Data::class);
 $apiKey = $powerToysHelper->getScopeConfig('power_toys/currency_converter/api_key');
+$nonce = $powerToysHelper->getNonce();
 ?>
 <div class="powertoys-currency-convert-wrapper">
     <div class="powertoys-currency-icon">
@@ -59,7 +60,7 @@ $apiKey = $powerToysHelper->getScopeConfig('power_toys/currency_converter/api_ke
         border-color: var(--jajuma-develop-black-module);
     }
 </style>
-<script>
+<script <?= $nonce ? 'nonce="' . $nonce . '"' : '' ?>>
     let currencies = ["AED", "AFN", "ALL", "AMD", "ANG", "AOA", "ARS", "AUD", "AWG", "AZN", "BAM", "BBD", "BDT", "BGN", "BHD", "BIF", "BMD", "BND", "BOB", "BRL", "BSD", "BTC", "BTN", "BWP", "BYN", "BZD", "CAD", "CDF", "CHF", "CLF", "CLP", "CNY", "COP", "CRC", "CUC", "CUP", "CVE", "CZK", "DJF", "DKK", "DOP", "DZD", "EGP", "ERN", "ETB", "EUR", "FJD", "FKP", "GBP", "GEL", "GGP", "GHS", "GIP", "GMD", "GNF", "GTQ", "GYD", "HKD", "HNL", "HRK", "HTG", "HUF", "IDR", "ILS", "IMP", "INR", "IQD", "IRR", "ISK", "JEP", "JMD", "JOD", "JPY", "KES", "KGS", "KHR", "KMF", "KPW", "KRW", "KWD", "KYD", "KZT", "LAK", "LBP", "LKR", "LRD", "LSL", "LYD", "MAD", "MDL", "MGA", "MKD", "MMK", "MNT", "MOP", "MRO", "MRU", "MUR", "MVR", "MWK", "MXN", "MYR", "MZN", "NAD", "NGN", "NIO", "NOK", "NPR", "NZD", "OMR", "PAB", "PEN", "PGK", "PHP", "PKR", "PLN", "PYG", "QAR", "RON", "RSD", "RUB", "RWF", "SAR", "SBD", "SCR", "SDG", "SEK", "SGD", "SHP", "SLL", "SOS", "SRD", "SSP", "STD", "STN", "SVC", "SYP", "SZL", "THB", "TJS", "TMT", "TND", "TOP", "TRY", "TTD", "TWD", "TZS", "UAH", "UGX", "USD", "UYU", "UZS", "VEF", "VES", "VND", "VUV", "WST", "XAF", "XAG", "XAU", "XCD", "XDR", "XOF", "XPD", "XPF", "XPT", "YER", "ZAR", "ZMW", "ZWL"];
     let apiCurrency = 'https://v6.exchangerate-api.com/v6/' + '<?= $apiKey ?>' + '/latest/USD';
     const firstDropDownCurrency = document.getElementById("first-currency-select");
